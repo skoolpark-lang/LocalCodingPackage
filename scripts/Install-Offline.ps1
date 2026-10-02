@@ -13,6 +13,28 @@ function Find-EditorCommand {
         $found = Get-Command $cmd -ErrorAction SilentlyContinue
         if ($found) { return $found.Source }
     }
+
+    $candidatePaths = @(
+        "$env:LOCALAPPDATA\Programs\VSCodium\bin\codium.cmd",
+        "$env:LOCALAPPDATA\Programs\VSCodium\VSCodium.exe",
+        "$env:ProgramFiles\VSCodium\bin\codium.cmd",
+        "$env:ProgramFiles\VSCodium\VSCodium.exe",
+        "${env:ProgramFiles(x86)}\VSCodium\bin\codium.cmd",
+        "${env:ProgramFiles(x86)}\VSCodium\VSCodium.exe",
+        "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd",
+        "$env:LOCALAPPDATA\Programs\Microsoft VS Code\Code.exe",
+        "$env:ProgramFiles\Microsoft VS Code\bin\code.cmd",
+        "$env:ProgramFiles\Microsoft VS Code\Code.exe",
+        "${env:ProgramFiles(x86)}\Microsoft VS Code\bin\code.cmd",
+        "${env:ProgramFiles(x86)}\Microsoft VS Code\Code.exe"
+    )
+
+    foreach ($path in $candidatePaths) {
+        if (-not [string]::IsNullOrWhiteSpace($path) -and (Test-Path -LiteralPath $path -PathType Leaf)) {
+            return $path
+        }
+    }
+
     return $null
 }
 
@@ -22,7 +44,7 @@ if (-not $editor -and -not $SkipEditorInstall) {
     $installer = Get-ChildItem -Path (Join-Path $Root "vendor\vscodium") -Filter "VSCodiumUserSetup-x64-*.exe" -File | Sort-Object LastWriteTime -Descending | Select-Object -First 1
     if ($installer) {
         Write-Host "Installing VSCodium from $($installer.Name)"
-        Start-Process -FilePath $installer.FullName -ArgumentList "/VERYSILENT", "/NORESTART" -Wait
+        Start-Process -FilePath $installer.FullName -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-", "/MERGETASKS=!runcodium" -Wait
         $editor = Find-EditorCommand
     }
 }
