@@ -46,8 +46,8 @@ $airGapSettings = @{
 }
 
 $settingFiles = @(
-    Join-Path $env:APPDATA "Code\User\settings.json",
-    Join-Path $env:APPDATA "VSCodium\User\settings.json"
+    (Join-Path $env:APPDATA "Code\User\settings.json")
+    (Join-Path $env:APPDATA "VSCodium\User\settings.json")
 )
 
 foreach ($settingsFile in $settingFiles) {
@@ -77,4 +77,3 @@ if ($ConfigureFirewall) {
 }
 
 Write-Host "Air-gap mode configured. Model traffic should use http://127.0.0.1:8080/v1 only."
-
