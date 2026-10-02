@@ -95,3 +95,23 @@ Model: local-qwen-coder
 
 이 패키지는 모델 파일을 제외한 실행 환경을 오프라인으로 옮기는 것을 목표로 합니다. 모델은 라이선스와 용량 문제 때문에 포함하지 않습니다.
 
+## 외부 접속 차단/무접속 모드
+
+오프라인 설치 ZIP에는 다운로드/릴리즈용 온라인 스크립트가 포함되지 않습니다. 설치 스크립트는 로컬 VSIX 설치, 로컬 llama.cpp 확인, 로컬 설정 파일 생성만 수행합니다.
+
+설치 과정에서 다음 VS Code/VSCodium 설정을 적용합니다.
+
+- `telemetry.telemetryLevel`: `off`
+- `update.mode`: `none`
+- `extensions.autoUpdate`: `false`
+- `extensions.autoCheckUpdates`: `false`
+- `extensions.ignoreRecommendations`: `true`
+- `workbench.enableExperiments`: `false`
+
+더 강하게 막고 싶으면 관리자 PowerShell에서 다음을 실행해 에디터 실행 파일의 outbound 방화벽 차단 규칙을 추가할 수 있습니다. 로컬 루프백 API(`127.0.0.1`)는 계속 사용할 수 있습니다.
+
+```powershell
+.\scripts\Enable-AirGapMode.ps1 -ConfigureFirewall
+```
+
+Roo Code provider는 반드시 `OpenAI Compatible` + `http://127.0.0.1:8080/v1`로 설정하세요. 외부 API provider를 선택하면 그 provider로 접속을 시도할 수 있습니다.

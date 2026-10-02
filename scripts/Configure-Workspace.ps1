@@ -96,6 +96,18 @@ try {
         tasks = $tasks
     } | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 -Path $tasksPath
 
+    $settingsPath = Join-Path $Project ".vscode\settings.json"
+    $workspaceSettings = [ordered]@{
+        "telemetry.telemetryLevel" = "off"
+        "update.mode" = "none"
+        "extensions.autoUpdate" = $false
+        "extensions.autoCheckUpdates" = $false
+        "extensions.ignoreRecommendations" = $true
+        "workbench.enableExperiments" = $false
+        "workbench.settings.enableNaturalLanguageSearch" = $false
+    }
+    $workspaceSettings | ConvertTo-Json -Depth 5 | Set-Content -Encoding UTF8 -Path $settingsPath
+
     $profilePath = Join-Path $Project "local-agent.build-profiles.json"
     [ordered]@{
         agent = [ordered]@{

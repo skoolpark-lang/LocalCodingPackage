@@ -38,6 +38,8 @@ Write-Host "Installing Roo Code extension: $($vsix.Name)"
 & $editor --install-extension $vsix.FullName --force
 if ($LASTEXITCODE -ne 0) { throw "Extension installation failed with exit code $LASTEXITCODE." }
 
+& (Join-Path $PSScriptRoot "Enable-AirGapMode.ps1")
+
 $server = Get-ChildItem -Path (Join-Path $Root "vendor\llama.cpp") -Recurse -Filter "llama-server.exe" -File | Select-Object -First 1
 if ($server) {
     Write-Host "llama.cpp server found: $($server.FullName)"
@@ -51,4 +53,3 @@ if ($ProjectPath) {
 
 Write-Host "Offline coding agent installation completed."
 Write-Host "Put a Qwen GGUF model under models\, then run scripts\Start-LocalModel.ps1."
-

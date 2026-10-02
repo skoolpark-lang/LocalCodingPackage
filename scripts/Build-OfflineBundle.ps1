@@ -115,8 +115,19 @@ Get-ChildItem -Path $Root -Force | Where-Object { $exclude -notcontains $_.Name 
     Copy-Item -LiteralPath $_.FullName -Destination $staging -Recurse -Force
 }
 
+$onlineOnlyScripts = @(
+    "scripts\Build-OfflineBundle.ps1",
+    "scripts\Publish-GitHubRelease.ps1"
+)
+
+foreach ($relative in $onlineOnlyScripts) {
+    $onlineScript = Join-Path $staging $relative
+    if (Test-Path -LiteralPath $onlineScript -PathType Leaf) {
+        Remove-Item -LiteralPath $onlineScript -Force
+    }
+}
+
 Compress-Archive -Path (Join-Path $staging "*") -DestinationPath $zipPath -Force
 Remove-Item -LiteralPath $tempRoot -Recurse -Force
 
 Write-Host "Offline bundle created: $zipPath"
-
