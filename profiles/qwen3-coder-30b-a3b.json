@@ -1,0 +1,17 @@
+{
+  "name": "Qwen3 Coder 30B A3B",
+  "modelId": "local-qwen-coder",
+  "provider": "openai-compatible",
+  "baseUrl": "http://127.0.0.1:8080/v1",
+  "apiKey": "none",
+  "recommendedQuant": "Q4_K_M",
+  "contextSize": 32768,
+  "temperature": 1.0,
+  "topP": 0.95,
+  "topK": 40,
+  "notes": [
+    "Recommended first local coding model for capable Windows workstations.",
+    "Use a larger context only if RAM or VRAM allows it."
+  ]
+}
+

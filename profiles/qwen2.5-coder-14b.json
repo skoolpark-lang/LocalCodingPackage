@@ -1,0 +1,16 @@
+{
+  "name": "Qwen2.5 Coder 14B",
+  "modelId": "local-qwen-coder",
+  "provider": "openai-compatible",
+  "baseUrl": "http://127.0.0.1:8080/v1",
+  "apiKey": "none",
+  "recommendedQuant": "Q4_K_M or Q5_K_M",
+  "contextSize": 32768,
+  "temperature": 0.6,
+  "topP": 0.9,
+  "notes": [
+    "Good fallback for 32GB RAM class Windows PCs.",
+    "Prefer Q5_K_M if performance is acceptable."
+  ]
+}
+

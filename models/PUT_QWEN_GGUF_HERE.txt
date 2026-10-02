@@ -1,0 +1,10 @@
+Copy your Qwen GGUF model file into this folder.
+
+Examples:
+
+- Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf
+- qwen2.5-coder-14b-instruct-q4_k_m.gguf
+- qwen2.5-coder-7b-instruct-q5_k_m.gguf
+
+Model files are intentionally not included in this package.
+
